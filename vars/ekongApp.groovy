@@ -2,15 +2,15 @@ def call(String repoUrl){
 pipeline {
        agent any
        stages{
-           stage{
-                Parallel{
-                    stage("Tools initialization") {
+           stage('1-Parallel'){
+                parallel{
+                    stage('1-1 Tools initialization') {
                         steps {
                             sh 'lscpu'
                             sh 'java -version'
                         }
                     }
-                    stage("Checkout Code") {
+                    stage('1-2 Checkout Code') {
                         steps {
                             git branch: 'main',
                                     url: "${repoUrl}"
@@ -18,7 +18,7 @@ pipeline {
                     }
                 }
             }
-            stage("to-test-maven") {
+            stage('2-to-test-maven') {
                steps {
                    sh 'df -h'
                }
